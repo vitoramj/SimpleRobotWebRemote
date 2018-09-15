@@ -27,7 +27,7 @@ The main purpose is for demonstration to school grade students.
 ## Compiling the Code
 
 Use qtcretor. If you don't have it, we recommend you to install it. Then run' run qmake and then build all.
-Otherwise you can use command line  
+Otherwise you can use command line (don1t forget to run qmake first.)  
 
 
 ## Usage
@@ -49,8 +49,9 @@ In order to test the program it is necessary to perform the following steps:
 
     `$ cd ~`  
     `$ mkdir public`  
-    `$ cd <FILE_LOCATION>`  
+    `$ cd <CODE_DIR>`  
     `$ cp contoller.html ~/public`  
+    `$ cd ~/public`  
     `$ sudo python3 -m http.server 1234`  
 
    which will start a simple web server listening on port 1234, which will contain the controller web page for access through a browser.  
@@ -58,7 +59,7 @@ In order to test the program it is necessary to perform the following steps:
 6. Connect your mobile or computer to the same network where the robot is.  
 7. Now you can access the web server from your web browser. At the menu bar add the following url  
 
-    `<http://<CONTROLLER_COMPUTER_IP>:1234/controller.html>`  
+    `<http://<ROBOT_COMPUTER_IP>:1234/controller.html>`  
 
    A window should open with buttons, to connect and control the robot.  
 
@@ -75,8 +76,7 @@ The application usage is simple, with the following options available:
 
 The app echoes each and every command sent by the client and checks if the command matches any robot command  
 
-First connect to the robot clicking the *Connect* button  
-Then, if connection is successful you will be able to send commands to the robot pressing any of the control buttons  
+First connect to the robot clicking the *Connect* button Then, if connection is successful you will be able to send commands to the robot pressing any of the control buttons. An example of web interface using Firefox is shown below:  
 
 ![alt text](https://raw.githubusercontent.com/vitoramj/SimpleRobotWebRemote/master/ScreenShot.png)  
 
