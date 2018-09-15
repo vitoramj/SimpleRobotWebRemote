@@ -1,22 +1,24 @@
-/***********************************************************************************
+> /***********************************************************************************
+> 
+> This program is provided as is, use it at your own risk
+> 
+> The program was constructed using WebScokets and Qt 5.9.1. Compiling
+> it with previous versions of qt is not recommended. The following Qt
+> modules are used: core, serialport and websokets.
+> 
+> Qt can be obtained at: <https://www.qt.io/download>
+> 
+> The program is strongly based on QSerialPort and QWebSockets examples.
+> 
+> Vitor A. M. Jorge
+> 
+> ***********************************************************************************/
 
-This program is provided as is, use it at your own risk
+Documentation of a Simple Neato WebSocket Control Application
+====
 
-The program was constructed using WebScokets and Qt 5.9.1. Compiling
-it with previous versions of qt is not recommended. The following Qt
-modules are used: core, serialport and websokets.
-
-Qt can be obtained at: <https://www.qt.io/download>
-
-The program is strongly based on QSerialPort and QWebSockets examples.
-
-Vitor A. M. Jorge
-
-***********************************************************************************/
-
-#Documentation of a Simple Neato WebSocket Control Application
-
-##Goal
+Goal
+----------
 
 
 This program is a very simple example on how to control a Neato Robot using a web browser.
@@ -25,7 +27,8 @@ Neato must be connected to a computer through a serial port and running a simple
 The main purpose is for demonstration to school grade students.  
 
 
-##Usage
+Usage
+----------
 
 In order to test the program it is necessary to perform the following steps:  
 
@@ -61,7 +64,8 @@ In order to test the program it is necessary to perform the following steps:
 9. Once connected, the robot should respond to user commands.  
 
 
-##WebSocketApplication Guide
+WebSocketApplication Guide
+----------
 
 The application usage is simple, with the following options available:  
     -h, --help         Displays this help.  
@@ -70,7 +74,8 @@ The application usage is simple, with the following options available:
 
 The app echoes each and every command sent by the client and checks if the command matches any command  
 
-##Limitations  
+Limitations 
+----------
 
 1. At this time the browser client cannot receive sensor information.  
 2. Connection to other robots is currently under development.  
