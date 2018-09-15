@@ -14,9 +14,9 @@ Vitor A. M. Jorge
 
 ***********************************************************************************/
 
-#Documentation of a Simple Neato WebSocket Control Application
+# Documentation of a Simple Neato WebSocket Control Application
 
-##Goal
+## Goal
 
 
 This program is a very simple example on how to control a Neato Robot using a web browser.
@@ -30,7 +30,7 @@ Use qtcretor. If you don't have it, we recommend you to install it. Then run' ru
 Otherwise you can use command line  
 
 
-##Usage
+## Usage
 
 In order to test the program it is necessary to perform the following steps:  
 
@@ -66,7 +66,7 @@ In order to test the program it is necessary to perform the following steps:
 9. Once connected, the robot should respond to user commands.  
 
 
-##WebSocketApplication Guide
+## WebSocketApplication Guide
 
 The application usage is simple, with the following options available:  
     -h, --help         Displays this help.  
@@ -81,7 +81,7 @@ Then, if connection is successful you will be able to send commands to the robot
 ![alt text](https://raw.githubusercontent.com/vitoramj/SimpleRobotWebRemote/master/ScreenShot.png)  
 
 
-##Limitations  
+## Limitations  
 
 1. At this time the browser client cannot receive sensor information.  
 2. Connection to other robots is currently under development.  
