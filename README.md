@@ -2,9 +2,9 @@
 
 This program is provided as is, use it at your own risk
 
-The program was constructed using WebScokets and Qt 5.9.1. Compiling
+The program was constructed using WebSockets and Qt 5.9.1. Compiling
 it with previous versions of qt is not recommended. The following Qt
-modules are used: core, serialport and websokets.
+modules are used: core, serialport and websockets.
 
 Qt can be obtained at: <https://www.qt.io/download>
 
@@ -18,13 +18,13 @@ Vitor A. M. Jorge
 
 ## Goal
 
-This program is a very simple example on how to control a Neato Robot using a web browser. Neato must be connected to a computer through a serial port and this computer should be able to run a simple web server (in this document we use a python3 http server).  
+This program is a very simple example on how to control a Neato Robot using a web browser. Neato must be connected to a computer through a serial port and this computer should be able to run a simple web server (in this document we use a Python3 http server).  
 
 The main purpose of this project is to enable a simple demonstration of robot usage and naive control directed to school grade students.  
 
 ## Compiling the Code
 
-Use Qtcretor. If you don't have it, we recommend you to install it --  also vailable using Qt's web installer. Open the .pro project file, run qmake and then build the project. Note that you can, instead, use command line if your Qt distribution is properly installed (qmake, then make). 
+Use QtCreator. If you don't have it, we recommend you to install it --  also available using Qt's web installer. Open the .pro project file, run qmake and then build the project. Note that you can, instead, use command line if your Qt distribution is properly installed (qmake, then make). 
 
 Be aware that Qt default system packages are old and some do not install qserialport. On Ubuntu you can install the old package using   
 
@@ -44,7 +44,7 @@ In order to test the program it is necessary to perform the following steps:
 
     `$ ./WebSocketServer -d -p 65001`  
 
-   which will launch the command receiver at all network interfaces ipa addresses at port 65001. __Note that you can change the port if necessary__ Details about the parameters are presented in the WebSocketApplication section.  __If the serial port presents errors, it means its config is probably incorrect and the robot will not respond__.  
+   which will launch the command receiver at all network interface addresses at port 65001. __Note that you can change the port if necessary__ Details about the parameters are presented in the WebSocketApplication section.  __If the serial port presents errors, it means its config is probably incorrect and the robot will not respond__.  
 
 
 5. Start a web server pointing to the folder containing the file controller.html. If you do not know how to do it, and you are running Ubuntu with python3, start the server as follows  
@@ -56,7 +56,7 @@ In order to test the program it is necessary to perform the following steps:
     `$ cd ~/public`  
     `$ sudo python3 -m http.server 1234`  
 
-   which will start a simple web server listening on port 1234, which will contain the controller web page which can be accessed using conventional a browser.  
+   which will start a simple web server listening on port 1234, containing the controller web page which can be accessed using conventional web browsers.  
 
 6. Connect your mobile or computer to the same network where the robot is.  
 7. Now you can access the web server from your web browser on your phone. At the menu bar add the following url  
