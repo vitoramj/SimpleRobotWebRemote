@@ -16,16 +16,22 @@ class RobotCommander : public QObject
 public:
     explicit RobotCommander(quint16 port, bool debug = false, QObject *parent = nullptr);
     ~RobotCommander();
+    int left;
+    int right;
 
 Q_SIGNALS:
     void closed();
 
     // Robot control signals
+    void startRobotCommand();
     void turnLeftCommand();
     void moveBackwardCommand();
     void moveForwardCommand();
     void turnRightCommand();
     void playSoundCommand();
+    void sendMoveCommand(const int left, const int right);
+    void shutdownRobotCommand();
+
 
 private Q_SLOTS:
     void onNewConnection();
@@ -34,7 +40,7 @@ private Q_SLOTS:
     void socketDisconnected();
 
     // testing
-    void sendKeepAlive();
+    //void sendKeepAlive();
 
 private:
     QWebSocketServer *m_pWebSocketServer;

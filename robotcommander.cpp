@@ -3,24 +3,27 @@
 #include "QtWebSockets/qwebsocket.h"
 #include <QtCore/QDebug>
 #include <QNetworkInterface>
+#include <QStringList>
 
 QT_USE_NAMESPACE
 
 RobotCommander::RobotCommander(quint16 port, bool debug, QObject *parent) :
     QObject(parent),
+    left(0),
+    right(0),
     m_pWebSocketServer(new QWebSocketServer(QStringLiteral("Robot Server"), QWebSocketServer::NonSecureMode, this)),
     m_debug(debug),
     robot(),
     timer()
 {
-    // Connects server and robot and starts the robot
-    robot.start();
+    connect(this,SIGNAL(startRobotCommand()), &robot,SLOT(startNeato()));
+    connect(this,SIGNAL(shutdownRobotCommand()), &robot,SLOT(shutdownNeato()));
     connect(this,SIGNAL(turnLeftCommand()), &robot,SLOT(turnLeft()));
     connect(this,SIGNAL(moveBackwardCommand()), &robot,SLOT(moveBackward()));
     connect(this,SIGNAL(moveForwardCommand()), &robot,SLOT(moveForward()));
     connect(this,SIGNAL(turnRightCommand()), &robot,SLOT(turnRight()));
     connect(this,SIGNAL(playSoundCommand()), &robot,SLOT(playSound()));
-
+    connect(this,SIGNAL(sendMoveCommand(int,int)), &robot,SLOT(makeMove(int,int)));
 
     // Get IP and display it on screen
     QString ipAddress;
@@ -46,7 +49,7 @@ RobotCommander::RobotCommander(quint16 port, bool debug, QObject *parent) :
 
         connect(m_pWebSocketServer, &QWebSocketServer::newConnection,
                 this, &RobotCommander::onNewConnection);
-        connect(m_pWebSocketServer, &QWebSocketServer::closed, this, &RobotCommander::closed);
+        connect(m_pWebSocketServer, &QWebSocketServer::closed, this, &RobotCommander::deleteLater);
     }
 
     // Testing init
@@ -58,12 +61,18 @@ RobotCommander::RobotCommander(quint16 port, bool debug, QObject *parent) :
 
 RobotCommander::~RobotCommander()
 {
+    // Connects server and robot and starts the robot
+    robot.startNeato();
+
     m_pWebSocketServer->close();
     qDeleteAll(m_clients.begin(), m_clients.end());
 }
 
 void RobotCommander::onNewConnection()
 {
+    emit startRobotCommand();
+//    robot.startNeato();
+
     QWebSocket *pSocket = m_pWebSocketServer->nextPendingConnection();
 
     connect(pSocket, &QWebSocket::textMessageReceived, this, &RobotCommander::processTextMessage);
@@ -92,6 +101,20 @@ void RobotCommander::processTextMessage(QString message)
         emit moveForwardCommand();
     if(message == QString("Talk"))
         emit playSoundCommand();
+
+
+     QStringList lowLevel(message.split(" "));
+     if(lowLevel.size()==3)
+     {
+        if(lowLevel.at(0)==QString("Move"))
+        {
+            left = lowLevel.at(1).toInt();
+            right =lowLevel.at(2).toInt();
+
+            if((left != 0 || right != 0) && (abs(left)<=1000 && abs(right)<=1000))
+                emit sendMoveCommand(left, right);
+        }
+     }
 }
 
 // Gets the incoming info and sends it back
@@ -106,6 +129,9 @@ void RobotCommander::processBinaryMessage(QByteArray message)
 }
 void RobotCommander::socketDisconnected()
 {
+    emit shutdownRobotCommand();
+//    robot.shutdownNeato();
+
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (m_debug)
         qDebug() << "socketDisconnected:" << pClient;
@@ -115,11 +141,11 @@ void RobotCommander::socketDisconnected()
     }
 }
 
-// Test funcion to send messages to the client according to a timer
-void RobotCommander::sendKeepAlive()
-{
-    // A simple message actively sent by the server
-    QByteArray message("Server is live");
-    for(int i=0; i<m_clients.size(); ++i)
-        m_clients.at(i)->sendTextMessage(message);
-}
+//// Test funcion to send messages to the client according to a timer
+//void RobotCommander::sendKeepAlive()
+//{
+//    // A simple message actively sent by the server
+//    QByteArray message("Server is live");
+//    for(int i=0; i<m_clients.size(); ++i)
+//        m_clients.at(i)->sendTextMessage(message);
+//}

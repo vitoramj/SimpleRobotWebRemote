@@ -22,9 +22,9 @@ public:
     NeatoSerialPortThread();
     ~NeatoSerialPortThread() override;
     void run() override;
-    bool startNeato();
 
 public slots:
+    bool startNeato();
     void shutdownNeato();
     void readLaser();
     void readOdometry();
@@ -34,6 +34,7 @@ public slots:
     void turnLeft();
     void turnRight();
     void playSound();
+    void makeMove(int left, int right);
 
 protected:
     QSerialPortInfo info;

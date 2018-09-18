@@ -205,8 +205,8 @@ void NeatoSerialPortThread::turnLeft()
 {
     if(port.isOpen())
     {
-        cout << "\nMoving 10cm back..." << endl;
-        if(port.write("SetMotor LWheelDist 60 RWheelDist 100 Speed 100\n")==-1)
+        cout << "\nMoving to the left..." << endl;
+        if(port.write("SetMotor LWheelDist -185 RWheelDist 185 Speed 100\n")==-1)
             cerr << "Could not move robot" << endl;
         port.flush();
         QThread::msleep(sleepInterval);
@@ -220,13 +220,13 @@ void NeatoSerialPortThread::turnRight()
     if(port.isOpen())
     {
         cout << "\nMoving 10cm back..." << endl;
-        if(port.write("SetMotor LWheelDist 100 RWheelDist 60 Speed 100\n")==-1)
+        if(port.write("SetMotor LWheelDist 185 RWheelDist -185 Speed 100\n")==-1)
             cerr << "Could not move robot" << endl;
         port.flush();
         QThread::msleep(sleepInterval);
     }
     else
-        cerr << "Moving Left failure" << endl;
+        cerr << "Moving Right failure" << endl;
 }
 
 void NeatoSerialPortThread::playSound()
@@ -240,4 +240,25 @@ void NeatoSerialPortThread::playSound()
     }
     else
         cerr << "Talking failure" << endl;
+}
+
+void NeatoSerialPortThread::makeMove(int left, int right)
+{
+    if(port.isOpen())
+    {
+        QString command("SetMotor LWheelDist ");
+        QString num;
+        command+=num.setNum(left);
+        command.append(" RWheelDist ");
+        command+=num.setNum(right);
+        command+=QString(" Speed 100\n");
+
+        cout << command.toStdString() << endl;
+        if(port.write(command.toLocal8Bit().data(),command.size())==-1)
+            cerr << "Could not move robot" << endl;
+        port.flush();
+        QThread::msleep(sleepInterval);
+    }
+    else
+        cerr << "Free Moving failure" << endl;
 }
