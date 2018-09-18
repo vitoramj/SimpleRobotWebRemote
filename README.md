@@ -26,11 +26,13 @@ The main purpose of this project is to enable a simple demonstration of robot us
 
 Use QtCreator. If you don't have it, we recommend you to install it --  also available using Qt's web installer. Open the .pro project file, run qmake and then build the project. Note that you can, instead, use command line if your Qt distribution is properly installed (qmake, then make). 
 
-Be aware that Qt default system packages are old and some do not install qserialport. On Ubuntu you can install the old package using   
+Be aware that Qt default system packages are old and some do not install qserialport and libqt5websockect5. QWebScokets are not available bedore 5.3, On Ubuntu you can install these packages using   
 
     `$sudo apt-get install libqt5serialport5`  
+    `$sudo apt-get install libqt5websockets5*`  
 
-__However we do not guarantee it will work with different Qt versions than the one tested.__. Install it using the web installer, which seems to be the best way to control Qt versions.  So far, the project was tested using Qt 5.9.1 running Ubuntu 16.04 64 bits. We have noticed that Raspberry Pi 2 running Ubuntu Mate 16.04 presented problems to connect to the Neato serial port -- we are working on a solution.   
+
+__However we do not guarantee it will work with different Qt versions than those tested.__. PReferrably, install it using the web installer, which seems to be the best way to control Qt versions.  So far, the project was tested using Qt 5.9.1 running Ubuntu 16.04 64 bits and Ubuntu Mate 16.04 with qtcreator and libs installed on a Raspberry Pi 2.   
 
 ## Usage
 
@@ -85,9 +87,8 @@ The app echoes each and every command sent by the client and checks if the comma
 
 ## Limitations  
 
-1. Does not work on default install and Qt 5.5.1 libs of Ubuntu Mate due to failure to detect the Neato port  
-2. At this time, the browser client cannot request sensor information.  
-3. Currently only movements and playing sound are supported. Even though they are somewhat straightforward to extend.  
-4. Connection to other robots is currently under development.  
+1. At this time, the browser client cannot request sensor information.  
+2. Currently only movements and playing sound are supported. Even though they are somewhat straightforward to extend.  
+3. Connection to other robots is currently under development.  
 
 Enjoy  
