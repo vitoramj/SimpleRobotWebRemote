@@ -50,6 +50,8 @@ RobotCommander::RobotCommander(quint16 port, bool debug, QObject *parent) :
         connect(m_pWebSocketServer, &QWebSocketServer::newConnection,
                 this, &RobotCommander::onNewConnection);
         connect(m_pWebSocketServer, &QWebSocketServer::closed, this, &RobotCommander::deleteLater);
+        connect(m_pWebSocketServer, &QWebSocketServer::closed, &robot, &QSerialPort::deleteLater);
+
     }
 
     // Testing init
@@ -62,7 +64,7 @@ RobotCommander::RobotCommander(quint16 port, bool debug, QObject *parent) :
 RobotCommander::~RobotCommander()
 {
     // Connects server and robot and starts the robot
-    robot.startNeato();
+    emit shutdownRobotCommand();
 
     m_pWebSocketServer->close();
     qDeleteAll(m_clients.begin(), m_clients.end());
@@ -70,8 +72,8 @@ RobotCommander::~RobotCommander()
 
 void RobotCommander::onNewConnection()
 {
-    emit shutdownRobotCommand();
-//    robot.startNeato();
+    emit startRobotCommand();
+    //robot.startNeato();
 
     QWebSocket *pSocket = m_pWebSocketServer->nextPendingConnection();
 

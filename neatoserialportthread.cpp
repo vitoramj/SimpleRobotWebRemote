@@ -17,34 +17,44 @@ NeatoSerialPortThread::~NeatoSerialPortThread()
 void NeatoSerialPortThread::run()
 {
     // Starting Neato Serial Port
-    started = startNeato();
+    //started = startNeato();
     exec();
 }
 
 bool NeatoSerialPortThread::startNeato()
 {
+    if(!this->isRunning()){
+        this->start();
+    }
+
     // Initialize Neato Serial Port
     if(ports.size()==0)
     {
         cerr << "No ports available" << endl;
         return false;
     }
-    int p;
+
+    int p=-1;
     for (int i = 0; i < ports.size(); ++i) {
         cout << "Getting port " << i << " details" << endl;
         cout << "Port Name: " << ports.at(i).portName().toStdString() << endl;
-        cout << ports.at(i).manufacturer().toStdString() << "\n" << endl;
-        if(port.portName()==QString("ttyACM0"))
+        cout << ports.at(i).manufacturer().toStdString() << endl;
+        if(ports.at(i).portName()==QString("ttyACM0")){
             p=i;
+            cout << "Port " << p << " selected" << endl;
+        }
+    }
+    if(p!=-1)
+    {
+        port.setPort(ports.at(p));
+        port.open(QIODevice::ReadWrite);
+        if(!port.isOpen()){
+            cerr << "Failed to open port" << p <<  port.portName().toStdString() << endl;
+            return false;
+        }
     }
 
-    port.setPort(ports.at(p));
-    port.open(QIODevice::ReadWrite);
-    if(!port.isOpen()){
-        cerr << "Failed to open port" << endl;
-        return false;
-    }
-    cout << "Port " << ports.at(0).portName().toStdString() << " opened" << endl;
+    cout << "Port " << ports.at(p).portName().toStdString() << " opened" << endl;
 
     if(port.write("PlaySound SoundID 0\n")==-1)
         cerr << "WARNING: Start Sound may have failed" << endl;
