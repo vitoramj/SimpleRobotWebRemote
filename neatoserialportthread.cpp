@@ -29,14 +29,16 @@ bool NeatoSerialPortThread::startNeato()
         cerr << "No ports available" << endl;
         return false;
     }
-
+    int p;
     for (int i = 0; i < ports.size(); ++i) {
         cout << "Getting port " << i << " details" << endl;
         cout << "Port Name: " << ports.at(i).portName().toStdString() << endl;
         cout << ports.at(i).manufacturer().toStdString() << "\n" << endl;
+        if(port.portName()==QString("ttyACM0"))
+            p=i;
     }
 
-    port.setPort(ports.at(0));
+    port.setPort(ports.at(p));
     port.open(QIODevice::ReadWrite);
     if(!port.isOpen()){
         cerr << "Failed to open port" << endl;

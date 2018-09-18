@@ -70,7 +70,7 @@ RobotCommander::~RobotCommander()
 
 void RobotCommander::onNewConnection()
 {
-    emit startRobotCommand();
+    emit shutdownRobotCommand();
 //    robot.startNeato();
 
     QWebSocket *pSocket = m_pWebSocketServer->nextPendingConnection();
