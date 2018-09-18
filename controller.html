@@ -14,12 +14,21 @@
         <p>
             <button onClick="sendForward();">Forward</button>
         </p>
-
+			
         <p>
             <button onClick="sendLeft();">Left</button>
             <button onClick="sendBackward();">Backward</button>
             <button onClick="sendRight();">Right</button>
         </p>
+        <br>
+        <h4>You can also send low level movments</h4>
+        <p>
+        <input type="number" id= "leftWD" min="-1000" max="1000" step="1" value ="0" title= "Left (mm)"/>
+        <input type="number" id= "rightWD" min="-1000" max="1000" step="1" value="0" title="Right (mm)"/>
+		  </p>
+		  <p>
+		  <button onClick="sendMove();">Send Wheels displacements (mm)</button>
+		  </p>
         <h3>Or try to talk to him!</h3>
         <p>
             <button onClick="makeTalk();">Talk</button>
@@ -78,8 +87,15 @@
                 var msg = "Talk";
                 sendCommand(msg);
             }
-
-            var wsUri = "ws://192.168.25.122:65001";
+            function sendMove()  {
+                var left = document.getElementById("leftWD").value;
+                var right = document.getElementById("rightWD").value;
+				    var msg = "Move " + String(left) + " " + String(right);
+                sendCommand(msg)
+					 
+            }
+            
+            var wsUri = "ws://192.168.0.101:65001";
             var websocket = null;
 
             function initWebSocket() {
